@@ -1,0 +1,66 @@
+create database quiz2;
+use quiz2;
+create table questions (
+   id int(12) auto_increment,
+   question varchar(231),
+   option1 varchar(211),
+   option2 varchar(112),
+   option3 varchar(109),
+   option4 varchar(123),
+   answer int,
+   primary key(id)
+);
+drop table questions;
+insert into questions (question,option1,option2,option3,option4,answer)values
+("what is our national flower?","rose","jasmine","lotus","lilly",3),
+("what is our national animal?","lion","tiger","cheeta","deer",2),
+("what is national fruit?","apple","orange","mango","graphes",3),
+("what is the chemical formulea of sodium?","na+","cl","ag","au",1);
+select*from questions;
+
+
+
+import mysql.connector
+mydb=mysql.connector.connect(
+   host="localhost",
+   user="root",
+   password="root",
+   database="quiz2"
+)
+
+cursor=mydb.cursor()
+def display_questions():
+    query=("SELECT*FROM questions")
+    cursor.execute(query)
+    questions=cursor.fetchall()
+    for question in questions:
+        print("Questions:",question[1])
+        print("options:")
+        print("1.",question[2])
+        print("2.",question[3])
+        print("3.",question[4])
+        print("4.",question[5])
+        print()
+def take_quiz():
+    score=0
+    query=("SELECT*FROM questions")
+    cursor.execute(query)
+    questions=cursor.fetchall()
+    for question in questions:
+        print("Questions:",question[1])
+        print("options:")
+        print("1.",question[2])
+        print("2.",question[3])
+        print("3.",question[4])
+        print("4.",question[5])
+        print()
+        print("Enter your answer(1-4):")
+        user_answer=int(input())
+        if user_answer==question[6]:
+            score+=1
+    return score
+print("Questions:")
+display_questions()
+print("answer:")
+user_score=take_quiz()
+print(user_score)
